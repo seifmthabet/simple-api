@@ -1,8 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
+import router from "./routes/tasks.js";
+
 
 const app = express();
 app.use(bodyParser.json());
+app.use("/tasks", router);
 
 
 const PORT = 3000;
