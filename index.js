@@ -1,12 +1,15 @@
 import express from "express";
 import bodyParser from "body-parser";
+import swaggerUi from "swagger-ui-express";
+
+import swaggerDocument from "./openapi.json" with { type: "json" };
 import router from "./routes/tasks.js";
 
 
 const app = express();
 app.use(bodyParser.json());
 app.use("/tasks", router);
-
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const PORT = 3000;
 
