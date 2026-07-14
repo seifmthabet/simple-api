@@ -58,5 +58,44 @@ router.post("/", (req, res) => {
     }
 })
 
+router.put("/:id", (req, res) => {
+    const taskId = parseInt(req.params.id);
+    const task = tasks.find(t => t.id === taskId);
+    if (task) {
+        const body = req.body;
+        if (body && (body.title || body.done !== undefined)) {
+            task.title = body.title ? body.title : task.title;
+            task.done = body.done !== undefined ? body.done : task.done;
+            res.statusCode = 200;
+            res.json(task)
+        } else {
+            res.statusCode = 400;
+            res.json({
+                "error": "Invalid request body"
+            })
+        }
+    } else {
+        res.statusCode = 404;
+        res.json({
+            "error": `Task ${taskId} not found`
+        })
+    }
+})
+
+router.delete("/:id", (req, res) => {
+    const taskId = parseInt(req.params.id);
+    const taskIndex = tasks.findIndex(t => t.id === taskId);
+    if (taskIndex !== -1) {
+        tasks.splice(taskIndex, 1);
+        res.statusCode = 204;
+        res.send()
+    } else {
+        res.statusCode = 404;
+        res.json({
+            "error": `Task ${taskId} not found`
+        })
+    }
+})
+
 
 export default router;
