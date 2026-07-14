@@ -39,4 +39,24 @@ router.get("/:id", (req, res) => {
     }
 }) 
 
+router.post("/", (req, res) => {
+    const body = req.body;
+    if (body && body.title) {
+        const newTask = {
+            id: tasks.length + 1,
+            title: body.title,
+            done: false
+        }
+        tasks.push(newTask);
+        res.statusCode = 201;
+        res.json(newTask)
+    } else {
+        res.statusCode = 400;
+        res.json({
+            "error": "Invalid request body"
+        })
+    }
+})
+
+
 export default router;
