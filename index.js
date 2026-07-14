@@ -1,19 +1,14 @@
 import express from "express";
+import bodyParser from "body-parser";
 
 const app = express();
+app.use(bodyParser.json());
+
+
 const PORT = 3000;
 
 app.get("/", (req, res) => {
-    res.json({
-        message: "Hello, World!"
-    })
-})
-
-app.get("/:name", (req, res) => {
-    const { name } = req.params;
-    res.json({
-        message: `Hello, ${name}!`
-    })
+    res.send("Hello, World!");
 })
 
 app.listen(PORT, () => {
